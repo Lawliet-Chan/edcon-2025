@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-MEV Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 80vh;
+            background-color: #2d3748;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .title-slide h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .slide-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-content p, .slide-content ul {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .slide-content ul {
+            text-align: left;
+            margin-top: 1rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .slide-content li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .slide-content li::before {
+            content: "•";
+            color: #63b3ed;
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+        }
+
+        .slide-content .svg-icon {
+            width: 8rem;
+            height: 8rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-container {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            background-color: #4a5568;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            user-select: none;
+        }
+
+        .nav-button:hover {
+            background-color: #63b3ed;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1rem;
+            color: #a0aec0;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation-container">
+    <!-- Slide 1 -->
+    <div class="slide title-slide" id="slide-1">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4">Anti-MEV</h1>
+        <p class="text-xl sm:text-2xl font-light text-blue-300">A Deep Dive into the Solutions and the Problems</p>
+    </div>
+
+    <!-- Slide 2: 1. Key Principles of Anti-MEV -->
+    <div class="slide title-slide" id="slide-2">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold">1. Key Principles of Anti-MEV</h1>
+    </div>
+
+    <!-- Slide 3: Weakening Power Asymmetry -->
+    <div class="slide slide-content" id="slide-3">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+        </svg>
+        <h2 class="text-3xl font-semibold mb-6">Weakening the Power Asymmetry</h2>
+        <p>Miners have transaction ordering power, but traders do not. Anti-MEV solutions must address this imbalance.</p>
+    </div>
+
+    <!-- Slide 4: Decentralized Execution -->
+    <div class="slide slide-content" id="slide-4">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="2" x2="12" y2="22"></line>
+            <path d="M20 12h-8"></path>
+            <path d="M4 12h8"></path>
+            <path d="M12 4.5l10 5.5-10 5.5-10-5.5z"></path>
+        </svg>
+        <h2 class="text-3xl font-semibold mb-6">Decentralized Execution</h2>
+        <p>The process of executing transactions should be decentralized and not tied to any single entity to prevent concentrated power.</p>
+    </div>
+
+    <!-- Slide 5: Verifiable Outcomes -->
+    <div class="slide slide-content" id="slide-5">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-8.08"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <h2 class="text-3xl font-semibold mb-6">Verifiable Outcomes</h2>
+        <p>All outcomes must be publicly verifiable to ensure that the rules of the protocol are being followed by all participants.</p>
+    </div>
+
+    <!-- Slide 6: 2. Proposer-Builder Separation (PBS): Making the Thief the Judge -->
+    <div class="slide title-slide" id="slide-6">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold">2. Proposer-Builder Separation (PBS)</h1>
+        <p class="text-xl sm:text-2xl font-light text-blue-300">Making the Thief the Judge</p>
+    </div>
+
+    <!-- Slide 7: PBS did not fundamentally constrain -->
+    <div class="slide slide-content" id="slide-7">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+        <h2 class="text-3xl font-semibold mb-6">A Redistribution of Profits</h2>
+        <p>PBS does not fundamentally constrain the miner's transaction ordering power; it is merely a redistribution of MEV profits.</p>
+    </div>
+
+    <!-- Slide 8: Retail Users Are Not the Biggest MEV Attackers -->
+    <div class="slide slide-content" id="slide-8">
+        <h2 class="text-3xl font-semibold mb-6">Who Are the Real Attackers?</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>Ordinary retail users do not have transaction ordering power, and if a transaction fails, they still have to pay gas fees.</li>
+            <li>Ethereum miners are the biggest beneficiaries of MEV, as they control the ordering power and almost never fail at MEV.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 9: PBS Exacerbates Asymmetry -->
+    <div class="slide slide-content" id="slide-9">
+        <h2 class="text-3xl font-semibold mb-6">PBS Exacerbates Asymmetry</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>Some private relays do not publicize their mempools, which itself blocks a trader's right to know.</li>
+            <li>Resource-rich builders will gradually squeeze other builders out of the market.
+                <a href="https://explorer.rated.network/builders?network=mainnet&timeWindow=1d&page=1" class="text-blue-400 hover:underline text-sm block mt-2" target="_blank">https://explorer.rated.network/builders?network=mainnet&timeWindow=1d&page=1</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Slide 10: PBS Explorer Visualization -->
+    <div class="slide slide-content" id="slide-10">
+        <h2 class="text-3xl font-semibold mb-6">PBS Builder Concentration</h2>
+        <div class="w-full max-w-5xl mx-auto flex-1 flex items-center justify-center">
+            <img src="PBS_explorer.png" alt="PBS Builder Concentration Visualization" class="max-w-full max-h-full object-contain rounded-lg shadow-lg">
+        </div>
+    </div>
+
+    <!-- Slide 11: Winner-Takes-All -->
+    <div class="slide slide-content" id="slide-11">
+        <h2 class="text-3xl font-semibold mb-6">The Winner-Takes-All Scenario</h2>
+        <p>The essence of PBS is to eliminate small-scale MEV attackers (retail users) and aggregate large-scale MEV attackers (the miner collective). Superficially, the number of successful MEV attacks may seem to decrease, but in reality, it's a winner-takes-all scenario.</p>
+    </div>
+
+    <!-- Slide 12: 3. FOCIL: Burying Your Head in the Sand -->
+    <div class="slide title-slide" id="slide-12">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold">3. FOCIL: Burying Your Head in the Sand</h1>
+    </div>
+
+    <!-- Slide 13: Committee Conflicts of Interest -->
+    <div class="slide slide-content" id="slide-13">
+        <h2 class="text-3xl font-semibold mb-6">Committee Conflicts of Interest</h2>
+        <p>In FOCIL, the committee is also selected from Ethereum beacon validators, which is like choosing a referee from the players in a game.</p>
+    </div>
+
+    <!-- Slide 14: A New Form of MEV Attack -->
+    <div class="slide slide-content" id="slide-14">
+        <h2 class="text-3xl font-semibold mb-6">A New Form of MEV Attack</h2>
+        <p>The method of forcibly stuffing the committee's "IL" (Insertion List) transactions into a block is, in itself, a form of MEV attack.</p>
+    </div>
+
+    <!-- Slide 15: 4. Encrypted Mempools Are Not Mature -->
+    <div class="slide title-slide" id="slide-15">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold">4. Encrypted Mempools Are Not Mature</h1>
+    </div>
+
+    <!-- Slide 16: Common Problems with Encryption -->
+    <div class="slide slide-content" id="slide-16">
+        <h2 class="text-3xl font-semibold mb-6">Common Problems with Encryption</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>The decryption performance of asymmetric encryption is extremely poor; RSA, for example, is on the order of 100ms.</li>
+            <li>High-performance symmetric encryption algorithms will cause a massive increase in storage costs for both individuals and public chains.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 17: Problems with Time-Locked Encryption -->
+    <div class="slide slide-content" id="slide-17">
+        <h2 class="text-3xl font-semibold mb-6">Problems with Time-Locked Encryption</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>The difficulty of setting the time lock is problematic. If the time is < average network latency, the effect is minimal; if it is > public network latency, it will affect block production and throughput.</li>
+            <li>In the pursuit of faster decryption, miners will continuously upgrade their chips, which will strengthen the trend towards centralization.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 18: Threshold Encryption & TEE -->
+    <div class="slide slide-content" id="slide-18">
+        <h2 class="text-3xl font-semibold mb-6">Threshold Encryption & TEE</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>Threshold Encryption Problems: Trust Assumption (Committee)</li>
+            <li>TEE (Trusted Execution Environment) Problems: Trust Assumption (Hardware)</li>
+        </ul>
+    </div>
+
+    <!-- Slide 19: 5. Anti-MEV Solutions Should Not Be Concentrated Solely on Ethereum L1 -->
+    <div class="slide title-slide" id="slide-19">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold">5. Anti-MEV Solutions Should Not Be Concentrated</h1>
+        <p class="text-xl sm:text-2xl font-light text-blue-300">Solely on Ethereum L1</p>
+    </div>
+
+    <!-- Slide 20: Engineering Requires Layering -->
+    <div class="slide slide-content" id="slide-20">
+        <h2 class="text-3xl font-semibold mb-6">Engineering Requires Layering</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>An operating system doesn't need to care about a database's atomicity and consistency problems; it only needs to ensure its own file system is reliable.</li>
+            <li>A banking system should only be used to define, issue, and settle currency. It should not take on the business of a stock exchange and then try to solve the technical challenges of a stock exchange within its own system.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 21: How Blockchains Need to Be Layered -->
+    <div class="slide slide-content" id="slide-21">
+        <h2 class="text-3xl font-semibold mb-6">How Blockchains Need to Be Layered</h2>
+        <p>L1 should only be responsible for settlement and proof of the legality of state changes. Other business logic should be handled by other application-specific chains, as different businesses have different infrastructure requirements. Some need anti-MEV measures, some do not; some need high throughput, while others prioritize low latency; some need to establish their own trusted data sources, and some need to design a separate consensus mechanism.</p>
+    </div>
+
+    <!-- Slide 22: 6. My Solution -->
+    <div class="slide title-slide" id="slide-22">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold">6. My Solution</h1>
+    </div>
+
+    <!-- Slide 23: A Layered Approach for DeFi -->
+    <div class="slide slide-content" id="slide-23">
+        <h2 class="text-3xl font-semibold mb-6">A Layered Approach for DeFi</h2>
+        <p>Only perform settlement on L1. DeFi requires a separate application-specific chain: Odd-numbered blocks are used for transaction ordering, and even-numbered blocks are used for transaction execution.</p>
+    </div>
+
+    <!-- Slide 24: The Solution Workflow -->
+    <div class="slide slide-content" id="slide-24">
+        <h2 class="text-3xl font-semibold mb-6">The Solution Workflow</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li>The user first sends the transaction hash (txHash) to the chain and prepays a small fee.</li>
+            <li>Miners order these txHashes based on the prepaid fees and broadcast their ordering (making an ordering commitment).</li>
+            <li>After seeing the ordering commitment, the user sends the full transaction content.</li>
+            <li>The miners complete the transaction execution based on the previous ordering commitment.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 25: Solution Diagram -->
+    <div class="slide slide-content" id="slide-25">
+        <h2 class="text-3xl font-semibold mb-6">Anti-MEV Solution Architecture</h2>
+        <div class="w-full max-w-6xl mx-auto flex-1 flex items-center justify-center">
+            <img src="anti-mev-solution.png" alt="Anti-MEV Solution Architecture" class="max-w-full max-h-full object-contain rounded-lg shadow-lg">
+        </div>
+    </div>
+
+    <!-- Slide 26: Fulfilling the Three Elements -->
+    <div class="slide slide-content" id="slide-26">
+        <h2 class="text-3xl font-semibold mb-6">Fulfilling the Three Elements</h2>
+        <ul class="text-left w-full max-w-xl mx-auto">
+            <li><b>Weakening the Power Asymmetry:</b> Miners do not know the transaction content before ordering, so they cannot perform MEV.</li>
+            <li><b>Decentralized Execution:</b> Using txHash instead of encrypted transactions saves more bandwidth and computing resources.</li>
+            <li><b>Verifiable Outcomes:</b> Ordering is based on the prepaid fee amount, and the ordering commitment is confirmed before execution.</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="nav-container">
+    <button id="prevBtn" class="nav-button">Previous</button>
+    <div id="slideCounter" class="slide-counter"></div>
+    <button id="nextBtn" class="nav-button">Next</button>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slideCounter = document.getElementById('slideCounter');
+    let currentSlide = 0;
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === currentSlide) {
+                slide.classList.add('active');
+            }
+        });
+
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlide();
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlide();
+        }
+    });
+
+    // Initial update
+    updateSlide();
+</script>
+
+</body>
+</html>
+
